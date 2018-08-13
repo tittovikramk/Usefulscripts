@@ -1,0 +1,14 @@
+
+Command To Take Dump From SVN
+
+1) svnadmin dump [Path of the Repository Folder] | svndumpfilter include [project name in the Repository] > Infor.dump
+
+2) svnrdump dump [URL for the project] > output.dump
+
+Command To Load Dump To SVN
+
+1) svnadmin load [Path to REPO] < output.dmp
+
+Command To Create New Repository.
+
+1) svnadmin create [PATH_TO_NEW_REPO]

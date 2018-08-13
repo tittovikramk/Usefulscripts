@@ -1,0 +1,5 @@
+---
+- name: Installing Java 8
+  hosts: bicapps
+  roles:
+   - { role: roles/Java-1.8-Oracle }

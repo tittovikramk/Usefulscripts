@@ -1,0 +1,69 @@
+--------------------------------------------
+Blank Strucuture
+--------------------------------------------
+$Source=""
+$Destination=""
+robocopy "$Source\Data Aggregation" "$Destination\Data Aggregation" /e /xf * /xd ".svn"
+robocopy "$Source\Data Representation" "$Destination\Data Representation" /e /xf "*.cs" /xf "*.sln" /xf "*.suo" /xf ".*.dll" /xd ".svn"
+robocopy "$Source\ReleaseManagement" "$Destination\ReleaseManagement" /e /xd /xf *.sql ".svn" "Patches"
+-----------------------------------------
+To find duplicate
+-----------------------------------------
+Clear-Host
+$LogFile="C:\Users\tittovikramk\Desktop\Currentdup\log.txt"
+function Write-HostWithLogandColor
+{param([string]$Statement,[string]$Color)
+	$DisplayStatement = $Statement
+	Add-Content $LogFile $DisplayStatement
+	Write-Host $Statement -ForegroundColor $Color
+
+}
+$Path="C:\Users\tittovikramk\Desktop\Current"
+$path1 ="C:\Users\tittovikramk\Desktop\Currentdup"
+if(Test-Path -Path $path1)
+{
+Remove-Item $path1 -Force -Recurse -ErrorAction SilentlyContinue
+}
+if(Test-Path $LogFile)
+{
+Remove-Item $LogFile -Force -Recurse -ErrorAction SilentlyContinue
+}
+robocopy $Path $path1 /xd /e "InsertData" ".svn" "Clinical Informatics" "InsertData"
+$fileGroups = Get-ChildItem -Path $path1 -Recurse -Include "*.sql" |
+    Where-Object { $_.Length -gt 0 } |
+    Group-Object Name |
+    Where-Object { $_.Count -gt 1 }
+	
+	
+ 
+ 
+foreach ($fileGroup in $fileGroups) {
+    foreach ($file in $fileGroup.Group) {
+	   Write-HostWithLogandColor $file.FullName Green
+       Write-Host $file.FullName -ForegroundColor Green
+	   }
+}
+If ([string]$Error -ne "")
+{
+exit 1;
+}
+------------------------------------
+Maven Set Maually
+------------------------------------
+set M2_HOME= C:\Program Files\apache-maven-3.0.4
+set PATH=%PATH%;%M2_HOME%\bin
+set JAVA_HOME=C:\Program Files\Java\jdk1.7.0_04
+set PATH=%PATH%;%JAVA_HOME%\bin
+---
+/opt/Maven/apache-maven-3.5.2
+export PATH=/opt/Maven/apache-maven-3.5.2/bin:$PATH
+-------------------------------------
+Name Finder
+-------------------------------------
+$Directory = "d:\DevelopmentBranch\"
+	$Phrase = "dimClinicalMeasureList"
+	$Files = Get-Childitem $Directory -recurse -Include *.sql `
+	-ErrorAction SilentlyContinue
+	$Files | Select-String $Phrase -ErrorAction SilentlyContinue `
+	| Group-Object filename | Sort-Object count -descending | Out-File C:\Users\amitm3\Desktop\test.txt 
+----------------------------------------

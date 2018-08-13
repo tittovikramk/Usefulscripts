@@ -1,0 +1,5 @@
+---
+- hosts: client
+  any_errors_fatal: true
+  roles:
+    - { role: /ansible-wildfly-10.0.0.final }

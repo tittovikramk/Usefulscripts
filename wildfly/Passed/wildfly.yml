@@ -1,0 +1,6 @@
+---
+- name: Parent File To Install Wildfly-10.0.0.Final Using Ansible Roles
+  hosts: client
+  become: true
+  roles:
+   - { role: Wildfly-10.0.0.Final }
